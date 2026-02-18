@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VC Tools</title>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./shared.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Source Sans 3', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        h1 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .tool-card {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 32px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tool-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--card-accent);
+            opacity: 0.8;
+        }
+
+        .tool-card:hover {
+            background: #f1f5f9;
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+            border-color: var(--card-accent);
+        }
+
+        .tool-card.valuation { --card-accent: var(--accent-1); }
+        .tool-card.termsheet { --card-accent: var(--accent-2); }
+        .tool-card.fees { --card-accent: var(--accent-4); }
+        .tool-card.loan { --card-accent: var(--accent-5); }
+
+        .tool-icon {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+        }
+
+        .tool-title {
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+
+        .tool-description {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .tool-tag {
+            display: inline-block;
+            margin-top: 16px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--card-accent);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 80px;
+            padding-top: 40px;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .container {
+                padding: 40px 16px;
+            }
+
+            .tool-card {
+                padding: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="site-nav">
+        <div class="nav-container">
+            <a href="./" class="nav-brand">VC Tools</a>
+            <ul class="nav-links">
+                <li><a href="./" class="active">Home</a></li>
+                <li><a href="./vc-valuation/">VC Valuation</a></li>
+                <li><a href="./term-sheet-analyzer/">Term Sheets</a></li>
+                <li><a href="./fund-fees/">Fund Fees</a></li>
+                <li><a href="./venture-loan/">Venture Loan</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        <header>
+            <h1>VC Tools</h1>
+            <p class="subtitle">Interactive tools for venture capital analysis — valuation, deal structuring, fund economics, and convertible instruments</p>
+        </header>
+
+        <div class="tools-grid">
+            <a href="./vc-valuation/" class="tool-card valuation">
+                <div class="tool-icon">&#x1f4b0;</div>
+                <h2 class="tool-title">VC Valuation</h2>
+                <p class="tool-description">VC method valuation, option pool dilution, multi-round modeling, convertible notes, binomial option pricing, and participating preferred stock.</p>
+                <span class="tool-tag">Valuation</span>
+            </a>
+
+            <a href="./term-sheet-analyzer/" class="tool-card termsheet">
+                <div class="tool-icon">&#x1f4dc;</div>
+                <h2 class="tool-title">Term Sheet Analyzer</h2>
+                <p class="tool-description">Compare competing term sheets side by side. Analyse liquidation preferences, anti-dilution protection, and their impact on founder economics.</p>
+                <span class="tool-tag">Deal Structure</span>
+            </a>
+
+            <a href="./fund-fees/" class="tool-card fees">
+                <div class="tool-icon">&#x1f3e6;</div>
+                <h2 class="tool-title">Fund Fees Explorer</h2>
+                <p class="tool-description">Model VC fund fee structures from the LP perspective. Explore management fees, carry mechanics, clawback provisions, and their impact on net returns.</p>
+                <span class="tool-tag">Fund Economics</span>
+            </a>
+
+            <a href="./venture-loan/" class="tool-card loan">
+                <div class="tool-icon">&#x1f4c8;</div>
+                <h2 class="tool-title">Venture Loan</h2>
+                <p class="tool-description">Model convertible loan mechanics. See how discount rates and valuation caps interact across different Series A pricing scenarios.</p>
+                <span class="tool-tag">Convertibles</span>
+            </a>
+        </div>
+
+        <footer>
+            <p>Dimo Dimov | Venture Capital Tools</p>
+        </footer>
+    </div>
+    <script>
+        window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    </script>
+    <script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>

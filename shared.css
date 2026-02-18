@@ -1,0 +1,98 @@
+/* Shared CSS Variables and Navigation for VC Tools */
+
+/* CSS Variables - Light Theme */
+:root {
+    --bg-primary: #f8fafc;
+    --bg-secondary: #ffffff;
+    --bg-tertiary: #f1f5f9;
+    --accent-1: #0d9488;
+    --accent-2: #2563eb;
+    --accent-3: #dc2626;
+    --accent-4: #d97706;
+    --accent-5: #7c3aed;
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+    --border-color: #e2e8f0;
+    --input-bg: #ffffff;
+}
+
+/* Global Nav Styles */
+.site-nav {
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border-color);
+    padding: 0.75rem 1.5rem;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.site-nav .nav-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.site-nav .nav-brand {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.site-nav .nav-brand:hover {
+    color: var(--accent-1);
+}
+
+.site-nav .nav-links {
+    display: flex;
+    gap: 0.5rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    flex-wrap: wrap;
+}
+
+.site-nav .nav-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-family: 'Source Sans 3', sans-serif;
+    transition: all 0.2s;
+}
+
+.site-nav .nav-links a:hover {
+    color: var(--text-primary);
+    background: var(--bg-tertiary);
+}
+
+.site-nav .nav-links a.active {
+    color: var(--accent-1);
+    background: rgba(13, 148, 136, 0.1);
+}
+
+/* Mobile nav */
+@media (max-width: 640px) {
+    .site-nav {
+        padding: 0.5rem 1rem;
+    }
+
+    .site-nav .nav-container {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .site-nav .nav-links {
+        justify-content: center;
+    }
+
+    .site-nav .nav-links a {
+        padding: 0.4rem 0.6rem;
+        font-size: 0.8rem;
+    }
+}
