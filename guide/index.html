@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guide — VC Tools</title>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../shared.css">
+    <style>
+        body {
+            font-family: 'Source Sans 3', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            margin: 0;
+            line-height: 1.7;
+        }
+
+        .guide-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 24px 80px;
+        }
+
+        .guide-container h1 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .guide-container h2 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.9rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-top: 3rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .guide-container h3 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.35rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .guide-container p {
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .guide-container em {
+            color: var(--text-secondary);
+        }
+
+        .guide-container strong {
+            color: var(--text-primary);
+        }
+
+        .guide-container a {
+            color: var(--accent-1);
+            text-decoration: none;
+        }
+
+        .guide-container a:hover {
+            text-decoration: underline;
+        }
+
+        .guide-container ul, .guide-container ol {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+
+        .guide-container li {
+            margin-bottom: 0.4rem;
+        }
+
+        .guide-container code {
+            font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+            font-size: 0.88em;
+            background: var(--bg-tertiary);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .guide-container pre {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 20px 24px;
+            border-radius: 10px;
+            overflow-x: auto;
+            margin-bottom: 1.25rem;
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+
+        .guide-container pre code {
+            background: none;
+            padding: 0;
+            color: inherit;
+            font-size: inherit;
+        }
+
+        .guide-container table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1.25rem;
+            font-size: 0.92rem;
+        }
+
+        .guide-container th {
+            background: var(--bg-tertiary);
+            font-weight: 600;
+            text-align: left;
+            padding: 10px 14px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .guide-container td {
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .guide-container tr:hover td {
+            background: var(--bg-tertiary);
+        }
+
+        .guide-container hr {
+            border: none;
+            border-top: 1px solid var(--border-color);
+            margin: 2.5rem 0;
+        }
+
+        .guide-container blockquote {
+            border-left: 4px solid var(--accent-1);
+            padding-left: 1rem;
+            margin: 1rem 0;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        /* Table of contents styling */
+        .toc-table td:first-child {
+            font-weight: 600;
+            white-space: nowrap;
+            width: 2rem;
+            color: var(--text-secondary);
+        }
+
+        .toc-table a {
+            font-weight: 600;
+        }
+
+        .toc-table td:last-child {
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        /* Decomposition tree styling */
+        .guide-container pre.tree {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 600px) {
+            .guide-container {
+                padding: 24px 16px 60px;
+            }
+
+            .guide-container h1 {
+                font-size: 2rem;
+            }
+
+            .guide-container h2 {
+                font-size: 1.5rem;
+            }
+
+            .guide-container pre {
+                font-size: 0.78rem;
+                padding: 14px 16px;
+            }
+
+            .guide-container table {
+                font-size: 0.82rem;
+            }
+
+            .guide-container th, .guide-container td {
+                padding: 8px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="site-nav">
+        <div class="nav-container">
+            <a href="../" class="nav-brand">VC Tools</a>
+            <ul class="nav-links">
+                <li><a href="../">Home</a></li>
+                <li><a href="../vc-valuation/">VC Valuation</a></li>
+                <li><a href="../valuation-nuances/">Valuation Nuances</a></li>
+                <li><a href="../term-sheet-analyzer/">Term Sheets</a></li>
+                <li><a href="../fund-fees/">Fund Fees</a></li>
+                <li><a href="../j-curve-fund/">Fund J-Curve</a></li>
+                <li><a href="./" class="active">Guide</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="guide-container" id="guide-content">
+        <p style="color: var(--text-secondary); margin-bottom: 2rem;"><a href="../">&larr; Back to tools</a></p>
+        <!-- Content will be rendered by marked.js -->
+        <noscript>
+            <p>This page requires JavaScript to render the guide.</p>
+        </noscript>
+    </div>
+
+    <footer>
+        <p>Dimo Dimov | Venture Capital Tools</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script>
+        async function loadGuide() {
+            try {
+                const response = await fetch('../guide.md');
+                const markdown = await response.text();
+
+                const container = document.getElementById('guide-content');
+                const backLink = container.querySelector('p');
+
+                // Configure marked
+                marked.setOptions({
+                    gfm: true,
+                    breaks: false
+                });
+
+                // Render markdown
+                const html = marked.parse(markdown);
+
+                // Create content div
+                const contentDiv = document.createElement('div');
+                contentDiv.innerHTML = html;
+
+                // Add IDs to h2 elements for anchor navigation
+                contentDiv.querySelectorAll('h2').forEach(h2 => {
+                    const text = h2.textContent;
+                    const match = text.match(/^\d+\.\s+(.+)/);
+                    if (match) {
+                        const id = match[1].toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/-$/, '');
+                        h2.id = text.replace(/\s+/g, '-').toLowerCase().replace(/[^a-z0-9-]/g, '');
+                        const numMatch = text.match(/^(\d+)/);
+                        if (numMatch) {
+                            h2.id = numMatch[1] + '-' + id;
+                        }
+                    }
+                });
+
+                // Add "Back to top" links after each tool section
+                const h2s = contentDiv.querySelectorAll('h2');
+                h2s.forEach((h2, i) => {
+                    const nextH2 = h2s[i + 1];
+                    if (nextH2) {
+                        const hr = nextH2.previousElementSibling;
+                        if (hr && hr.tagName === 'HR') {
+                            const topLink = document.createElement('p');
+                            topLink.style.textAlign = 'right';
+                            topLink.style.marginTop = '1.5rem';
+                            topLink.innerHTML = '<a href="#guide-content" style="font-size: 0.85rem; color: var(--text-secondary);">&uarr; Back to top</a>';
+                            hr.parentNode.insertBefore(topLink, hr);
+                        }
+                    }
+                });
+                // Add one after the last section too
+                const lastTopLink = document.createElement('p');
+                lastTopLink.style.textAlign = 'right';
+                lastTopLink.style.marginTop = '1.5rem';
+                lastTopLink.innerHTML = '<a href="#guide-content" style="font-size: 0.85rem; color: var(--text-secondary);">&uarr; Back to top</a>';
+                contentDiv.appendChild(lastTopLink);
+
+                // Insert after back link
+                container.appendChild(contentDiv);
+
+            } catch (error) {
+                console.error('Failed to load guide:', error);
+                document.getElementById('guide-content').innerHTML +=
+                    '<p style="color: var(--accent-3);">Failed to load guide content. Please try refreshing the page.</p>';
+            }
+        }
+
+        loadGuide();
+    </script>
+    <script>
+        window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    </script>
+    <script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>

@@ -11,7 +11,6 @@
     "dev:vc-valuation": "npm run dev -w @vc-tools/vc-valuation",
     "dev:term-sheet-analyzer": "npm run dev -w @vc-tools/term-sheet-analyzer",
     "dev:fund-fees": "npm run dev -w @vc-tools/fund-fees",
-    "dev:venture-loan": "npm run dev -w @vc-tools/venture-loan",
     "dev:j-curve-fund": "npm run dev -w @vc-tools/j-curve-fund"
   }
 }
