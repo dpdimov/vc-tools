@@ -1,6 +1,6 @@
 import React from 'react'
 
-const VCValuation = () => {
+const ValuationNuances = () => {
   return (
     <div style={{
       maxWidth: '1200px',
@@ -14,7 +14,7 @@ const VCValuation = () => {
         fontSize: '2.5rem',
         fontWeight: 700,
         marginBottom: '1rem'
-      }}>VC Valuation</h1>
+      }}>Valuation Nuances</h1>
       <p style={{ color: '#64748b', fontSize: '1.1rem' }}>
         Tool under construction.
       </p>
@@ -22,4 +22,4 @@ const VCValuation = () => {
   )
 }
 
-export default VCValuation
+export default ValuationNuances

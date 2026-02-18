@@ -1,8 +1,8 @@
 import React from 'react'
-import VCValuation from './components/VCValuation'
+import VCValuationTool from './components/VCValuationTool'
 
 function App() {
-  return <VCValuation />
+  return <VCValuationTool />
 }
 
 export default App

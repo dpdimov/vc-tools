@@ -33,13 +33,15 @@ Same as financial-tools:
 - **Accents**: Teal `#0d9488`, Blue `#2563eb`, Red `#dc2626`, Amber `#d97706`, Purple `#7c3aed`
 - **Google Fonts link**: `Crimson+Pro:wght@400;600;700&family=Source+Sans+3:wght@300;400;600`
 
-## Tools (4 planned)
+## Tools (6 total)
 
-| Tool | Package | Source Exercise |
-|------|---------|----------------|
-| VC Valuation | `@vc-tools/vc-valuation` | Valuation exercises + Valuation with participation |
+| Tool | Package | Source |
+|------|---------|--------|
+| VC Valuation | `@vc-tools/vc-valuation` | Copied from financial-tools (exists in both repos) |
+| Valuation Nuances | `@vc-tools/valuation-nuances` | Valuation exercises + Valuation with participation |
 | Term Sheet Analyzer | `@vc-tools/term-sheet-analyzer` | VC termsheets |
 | Fund Fees Explorer | `@vc-tools/fund-fees` | LP fees exercise |
+| Fund J-Curve | `@vc-tools/j-curve-fund` | Moved from financial-tools |
 | Venture Loan | `@vc-tools/venture-loan` | Venture loan |
 
 ## Navigation
@@ -50,7 +52,7 @@ Every tool page has a `<nav class="site-nav">` linking to all tools. When adding
 
 ## Tool Specifications
 
-### 1. VC Valuation (`vc-valuation`)
+### 1. Valuation Nuances (`valuation-nuances`)
 
 **Source**: `Valuation exercises.pdf/.xlsx` + `Valuation exercise with participation.pdf/.xlsx`
 

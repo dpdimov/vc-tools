@@ -87,8 +87,10 @@
         }
 
         .tool-card.valuation { --card-accent: var(--accent-1); }
+        .tool-card.nuances { --card-accent: #f472b6; }
         .tool-card.termsheet { --card-accent: var(--accent-2); }
         .tool-card.fees { --card-accent: var(--accent-4); }
+        .tool-card.jcurve { --card-accent: #63b3ed; }
         .tool-card.loan { --card-accent: var(--accent-5); }
 
         .tool-icon {
@@ -152,8 +154,10 @@
             <ul class="nav-links">
                 <li><a href="./" class="active">Home</a></li>
                 <li><a href="./vc-valuation/">VC Valuation</a></li>
+                <li><a href="./valuation-nuances/">Valuation Nuances</a></li>
                 <li><a href="./term-sheet-analyzer/">Term Sheets</a></li>
                 <li><a href="./fund-fees/">Fund Fees</a></li>
+                <li><a href="./j-curve-fund/">Fund J-Curve</a></li>
                 <li><a href="./venture-loan/">Venture Loan</a></li>
             </ul>
         </div>
@@ -168,8 +172,15 @@
             <a href="./vc-valuation/" class="tool-card valuation">
                 <div class="tool-icon">&#x1f4b0;</div>
                 <h2 class="tool-title">VC Valuation</h2>
-                <p class="tool-description">VC method valuation, option pool dilution, multi-round modeling, convertible notes, binomial option pricing, and participating preferred stock.</p>
+                <p class="tool-description">Combine DCF fundamentals with venture-specific risk adjustment and comparable benchmarking. Risk-adjusted discount rates reflect probability of total loss.</p>
                 <span class="tool-tag">Valuation</span>
+            </a>
+
+            <a href="./valuation-nuances/" class="tool-card nuances">
+                <div class="tool-icon">&#x1f50d;</div>
+                <h2 class="tool-title">Valuation Nuances</h2>
+                <p class="tool-description">Explore how deal terms shift real economics away from headline valuations. Participating preferred, cumulative dividends, option pools, and convertible notes.</p>
+                <span class="tool-tag">Deal Mechanics</span>
             </a>
 
             <a href="./term-sheet-analyzer/" class="tool-card termsheet">
@@ -184,6 +195,13 @@
                 <h2 class="tool-title">Fund Fees Explorer</h2>
                 <p class="tool-description">Model VC fund fee structures from the LP perspective. Explore management fees, carry mechanics, clawback provisions, and their impact on net returns.</p>
                 <span class="tool-tag">Fund Economics</span>
+            </a>
+
+            <a href="./j-curve-fund/" class="tool-card jcurve">
+                <div class="tool-icon">&#x1f3e6;</div>
+                <h2 class="tool-title">Fund J-Curve</h2>
+                <p class="tool-description">Model VC fund cash flows to LPs. Explore how stage focus, portfolio construction, and follow-on reserves shape the GP's J-curve.</p>
+                <span class="tool-tag">VC Funds</span>
             </a>
 
             <a href="./venture-loan/" class="tool-card loan">
