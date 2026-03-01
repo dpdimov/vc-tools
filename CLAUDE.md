@@ -33,7 +33,7 @@ Same as financial-tools:
 - **Accents**: Teal `#0d9488`, Blue `#2563eb`, Red `#dc2626`, Amber `#d97706`, Purple `#7c3aed`
 - **Google Fonts link**: `Crimson+Pro:wght@400;600;700&family=Source+Sans+3:wght@300;400;600`
 
-## Tools (7 total)
+## Tools (6 total)
 
 | Tool | Package | Source |
 |------|---------|--------|
@@ -43,7 +43,6 @@ Same as financial-tools:
 | Fund Fees Explorer | `@vc-tools/fund-fees` | LP fees exercise |
 | Fund J-Curve | `@vc-tools/j-curve-fund` | Moved from financial-tools |
 | VC Funnel Model | `@vc-tools/vc-funnel` | Monte Carlo portfolio return modeller |
-| Venture Loan | `@vc-tools/venture-loan` | Venture loan |
 
 ## Navigation
 
@@ -154,23 +153,6 @@ Models VC fund economics from the LP perspective: fee structures, carry/clawback
 - LP cash flow timeline (drawdowns, distributions, clawback/fee adjustments)
 - Calculates net IRR under: (1) original terms with clawback recovery, (2) proposed fee swap
 
-### 4. Venture Loan Calculator (`venture-loan`)
-
-**Source**: `Venture loan.docx/.xlsx`
-
-Models convertible loan/note mechanics showing how discount and cap provisions interact across different Series A pricing scenarios.
-
-**Inputs**
-- Loan amount, price discount %, valuation cap, next round size, current shares outstanding, annual interest rate, time to conversion (years)
-
-**Outputs**
-- Table across a range of Series A share prices (e.g. $0.50 to $6.00):
-  - Discounted price, shares via discount method, ownership % via discount
-  - Capped price, shares via cap method, ownership % via cap
-  - Effective conversion: lower of discount/cap (highlighted)
-- Chart: ownership % via discount vs ownership % via cap across share prices, with crossover point highlighted
-- Three-party cap table at a user-selected share price: founder shares, Series A shares, note shares, total, stake %
-
 ---
 
 ## Source Files (reference material, not deployed)
@@ -180,7 +162,6 @@ Located in the repo root:
 - `Valuation exercises.pdf` / `.xlsx` — VC method, convertible notes, option pricing
 - `Valuation exercise with participation.pdf` / `.xlsx` — Participating preferred, cumulative dividends
 - `VC termsheets.pdf` / `.xlsx` — Term sheet comparison exercise
-- `Venture loan.docx` / `.xlsx` — Convertible loan exercise
 
 ## Gotchas
 
