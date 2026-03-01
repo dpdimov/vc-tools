@@ -30,11 +30,13 @@ function percentile(sorted, p) {
 
 // ─── Monte Carlo ──────────────────────────────────────────────────────────────
 function simulateCompany(trans, maFrac, maVal, unicornRate, unicornVal, own) {
-  if (Math.random() * 100 < unicornRate)
-    return unicornVal * own * Math.pow(1 - DILUTION_PER_ROUND, 4);
   for (let i = 0; i < STAGES.length; i++) {
     const advances = (i < STAGES.length - 1) && (Math.random() * 100 < trans[i]);
     if (!advances) {
+      // At E+ (last stage), check for unicorn outcome first
+      if (i === STAGES.length - 1 && Math.random() * 100 < unicornRate) {
+        return unicornVal * own * Math.pow(1 - DILUTION_PER_ROUND, i);
+      }
       if (Math.random() * 100 < maFrac[i]) {
         const noise = Math.exp(0.9 * (Math.random() * 2 - 1));
         return maVal[i] * noise * own * Math.pow(1 - DILUTION_PER_ROUND, i);
@@ -163,7 +165,7 @@ export default function VCFunnelModel() {
   const [trans,        setTrans]        = useState(DEFAULT_TRANS);
   const [maFrac,       setMaFrac]       = useState(DEFAULT_MA_FRAC);
   const [maVal,        setMaVal]        = useState(DEFAULT_MA_VAL);
-  const [unicornRate,  setUnicornRate]  = useState(1.07);
+  const [unicornRate,  setUnicornRate]  = useState(18);
   const [unicornVal,   setUnicornVal]   = useState(3000);
   const [numSeed,      setNumSeed]      = useState(20);
   const [seedCheck,    setSeedCheck]    = useState(0.5);
@@ -181,14 +183,17 @@ export default function VCFunnelModel() {
       const at  = rem;
       const adv = i < STAGES.length - 1 ? Math.round(at * trans[i] / 100) : 0;
       const lv  = at - adv;
-      const ma  = Math.round(lv * maFrac[i] / 100);
-      stages.push({ stage:STAGES[i], atStage:at, advancing:adv, maExits:ma, deaths:lv-ma, stageProceeds:ma*maVal[i] });
+      // At E+ (last stage): unicorns are companies that continue as high-value privates
+      const uni = i === STAGES.length - 1 ? Math.round(lv * unicornRate / 100) : 0;
+      const maPool = lv - uni;
+      const ma  = Math.round(maPool * maFrac[i] / 100);
+      stages.push({ stage:STAGES[i], atStage:at, advancing:adv, unicorns:uni, maExits:ma, deaths:maPool-ma, stageProceeds:ma*maVal[i] });
       rem = adv;
     }
-    const uni    = Math.round(COHORT * unicornRate / 100);
+    const totalUni  = stages.reduce((s,r) => s+r.unicorns, 0);
     const totalMA   = stages.reduce((s,r) => s+r.maExits, 0);
     const totalDead = stages.reduce((s,r) => s+r.deaths, 0);
-    return { stages, totals:{ totalMA, totalDead, unicorns:uni } };
+    return { stages, totals:{ totalMA, totalDead, unicorns:totalUni } };
   }, [trans, maFrac, maVal, unicornRate]);
 
   // ── Deterministic fund return ─────────────────────────────────────────────
@@ -207,7 +212,7 @@ export default function VCFunnelModel() {
     stages.forEach((s, i) => {
       proc += s.stageProceeds * (numSeed/COHORT) * own * Math.pow(1-DILUTION_PER_ROUND, i);
     });
-    const uniProc = totals.unicorns * unicornVal * (numSeed/COHORT) * own * Math.pow(1-DILUTION_PER_ROUND, 4);
+    const uniProc = totals.unicorns * unicornVal * (numSeed/COHORT) * own * Math.pow(1-DILUTION_PER_ROUND, STAGES.length-1);
     proc += uniProc;
     const mult = cap > 0 ? proc / cap : 0;
     return { cap, proc, mult, concentrationPct: proc > 0 ? (uniProc/proc)*100 : 0 };
@@ -232,7 +237,7 @@ export default function VCFunnelModel() {
 
   // ── Chart data ────────────────────────────────────────────────────────────
   const funnelData = stages.map((s) => ({
-    name:s.stage, Advancing:s.advancing, "M&A Exit":s.maExits, "Dead/Zombie":s.deaths
+    name:s.stage, Advancing:s.advancing, Unicorn:s.unicorns, "M&A Exit":s.maExits, "Dead/Zombie":s.deaths
   }));
   const proceedsData = stages.map((s) => ({ name:s.stage, proceeds:s.stageProceeds }))
     .concat([{ name:"Unicorns", proceeds:totals.unicorns*unicornVal }]);
@@ -286,9 +291,9 @@ export default function VCFunnelModel() {
           ))}
 
           <Label>Unicorn Parameters</Label>
-          <Slider label="Unicorn rate (% of cohort)" value={unicornRate}
-            min={0} max={5} step={0.1} onChange={setUnicornRate}
-            format={(v) => `${Number(v).toFixed(2)}%`} color={C.unicorn} />
+          <Slider label="Unicorn rate (% of E+ stage)" value={unicornRate}
+            min={0} max={50} step={1} onChange={setUnicornRate}
+            color={C.unicorn} />
           <Slider label="Unicorn exit value" value={unicornVal}
             min={1000} max={20000} step={100} onChange={setUnicornVal}
             format={fmtM} color={C.unicorn} />
@@ -310,7 +315,7 @@ export default function VCFunnelModel() {
             <KPICard label="M&A Exits" value={totals.totalMA}
               sub={`${fmt(totals.totalMA/10,1)}% of cohort`} color={C.ma} />
             <KPICard label="Unicorns" value={totals.unicorns}
-              sub={`${fmt(totals.unicorns/10,2)}% of cohort`} color={C.unicorn} />
+              sub={`${fmt(totals.unicorns/10,2)}% of cohort · ${fmt(stages[STAGES.length-1].atStage > 0 ? totals.unicorns/stages[STAGES.length-1].atStage*100 : 0,0)}% of E+`} color={C.unicorn} />
             <KPICard label="Dead / Zombie" value={totals.totalDead}
               sub={`${fmt(totals.totalDead/10,1)}% of cohort`} color={C.dead} />
             <KPICard label="Expected Multiple" value={fmtMx(det.mult)}
@@ -326,7 +331,7 @@ export default function VCFunnelModel() {
               <div style={{ fontSize: 12, fontWeight: 700, marginBottom: 4 }}>Startup Survival Funnel</div>
               <div style={{ fontSize: 11, color: C.muted, marginBottom: 10 }}>Company outcomes per 1,000 at each stage</div>
               <div style={{ display: "flex", gap: 14, marginBottom: 10 }}>
-                {[["Advancing",C.advance],["M&A Exit",C.ma],["Dead/Zombie",C.dead]].map(([l,c])=>(
+                {[["Advancing",C.advance],["Unicorn",C.unicorn],["M&A Exit",C.ma],["Dead/Zombie",C.dead]].map(([l,c])=>(
                   <div key={l} style={{ display: "flex", alignItems: "center", gap: 5 }}>
                     <div style={{ width: 10, height: 10, borderRadius: 2, background: c }} />
                     <span style={{ fontSize: 10, color: C.muted }}>{l}</span>
@@ -339,6 +344,7 @@ export default function VCFunnelModel() {
                   <YAxis type="category" dataKey="name" tick={{ fill:C.text,fontSize:11 }} width={68} />
                   <Tooltip content={<FunnelTip />} />
                   <Bar dataKey="Advancing" stackId="a" fill={C.advance} />
+                  <Bar dataKey="Unicorn"   stackId="a" fill={C.unicorn} />
                   <Bar dataKey="M&A Exit"  stackId="a" fill={C.ma} />
                   <Bar dataKey="Dead/Zombie" stackId="a" fill={C.dead} />
                 </BarChart>
