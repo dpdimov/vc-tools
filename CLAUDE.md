@@ -33,7 +33,7 @@ Same as financial-tools:
 - **Accents**: Teal `#0d9488`, Blue `#2563eb`, Red `#dc2626`, Amber `#d97706`, Purple `#7c3aed`
 - **Google Fonts link**: `Crimson+Pro:wght@400;600;700&family=Source+Sans+3:wght@300;400;600`
 
-## Tools (6 total)
+## Tools (7 total)
 
 | Tool | Package | Source |
 |------|---------|--------|
@@ -42,6 +42,7 @@ Same as financial-tools:
 | Term Sheet Analyzer | `@vc-tools/term-sheet-analyzer` | VC termsheets |
 | Fund Fees Explorer | `@vc-tools/fund-fees` | LP fees exercise |
 | Fund J-Curve | `@vc-tools/j-curve-fund` | Moved from financial-tools |
+| VC Funnel Model | `@vc-tools/vc-funnel` | Monte Carlo portfolio return modeller |
 | Venture Loan | `@vc-tools/venture-loan` | Venture loan |
 
 ## Navigation
