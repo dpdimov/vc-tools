@@ -318,6 +318,12 @@ Error generating stack: `+i.message+`
         }
 
         @media (max-width: 500px) {
+          .page-wrapper {
+            padding: 16px;
+          }
+          .page-title {
+            font-size: 24px;
+          }
           .metrics-grid {
             grid-template-columns: 1fr 1fr;
           }
