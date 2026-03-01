@@ -1378,6 +1378,8 @@ const ValuationNuances = () => {
         @media (max-width: 600px) {
           .vn-metrics-grid { grid-template-columns: repeat(2, 1fr); }
           .vn-tab-btn { padding: 8px 12px; font-size: 11px; }
+          .vn-wrapper { padding: 16px; }
+          .vn-title { font-size: 24px; }
         }
       `}</style>
 

@@ -312,7 +312,7 @@ const TermSheetAnalyzer = () => {
         .ts-highlight-worse { background: rgba(220, 38, 38, 0.04); }
         .ts-metrics-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 28px; }
         @media (max-width: 1100px) { .ts-two-col { grid-template-columns: 1fr; } .ts-wrapper { padding: 20px; } .ts-title { font-size: 28px; } .ts-metrics-grid { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 600px) { .ts-metrics-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 600px) { .ts-metrics-grid { grid-template-columns: 1fr; } .ts-wrapper { padding: 16px; } .ts-title { font-size: 24px; } }
       `}</style>
 
       <div className="ts-wrapper">

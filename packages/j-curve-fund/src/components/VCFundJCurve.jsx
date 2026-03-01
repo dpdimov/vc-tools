@@ -506,6 +506,12 @@ const VCFundJCurve = () => {
           .metrics-grid {
             grid-template-columns: repeat(2, 1fr);
           }
+          .page-wrapper {
+            padding: 16px;
+          }
+          .page-title {
+            font-size: 24px;
+          }
         }
       `}</style>
 

@@ -411,6 +411,8 @@ const FundFees = () => {
         @media (max-width: 600px) {
           .ff-metrics-grid { grid-template-columns: repeat(2, 1fr); }
           .ff-metrics-grid.has-clawback { grid-template-columns: repeat(2, 1fr); }
+          .ff-wrapper { padding: 16px; }
+          .ff-title { font-size: 24px; }
         }
       `}</style>
 

@@ -123,7 +123,7 @@ function FunnelTip({ active, payload, label }) {
 function SourceBox() {
   const [open, setOpen] = useState(false);
   return (
-    <div style={{ margin: "20px 28px 0", border: `1px solid ${C.border}`, borderRadius: 8, overflow: "hidden" }}>
+    <div className="funnel-source-box" style={{ border: `1px solid ${C.border}`, borderRadius: 8, overflow: "hidden" }}>
       <button onClick={() => setOpen(!open)} style={{
         width: "100%", background: C.panel, border: "none", cursor: "pointer",
         padding: "10px 16px", display: "flex", alignItems: "center", justifyContent: "space-between",
@@ -243,29 +243,164 @@ export default function VCFunnelModel() {
     .concat([{ name:"Unicorns", proceeds:totals.unicorns*unicornVal }]);
 
   return (
-    <div style={{ minHeight: "100vh", background: C.bg, color: C.text,
-      fontFamily: "'Source Sans 3','Helvetica Neue',Arial,sans-serif", paddingBottom: 40 }}>
+    <div className="funnel-page">
+      <style>{`
+        .funnel-page {
+          min-height: 100vh;
+          background: ${C.bg};
+          color: ${C.text};
+          font-family: 'Source Sans 3','Helvetica Neue',Arial,sans-serif;
+          padding-bottom: 40px;
+        }
+        .funnel-header {
+          border-bottom: 1px solid ${C.border};
+          padding: 20px 32px 18px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
+        .funnel-header-title {
+          font-size: 18px;
+          font-weight: 800;
+          letter-spacing: -0.02em;
+          font-family: 'Crimson Pro', serif;
+        }
+        .funnel-header-sub {
+          font-size: 12px;
+          color: ${C.muted};
+          margin-top: 3px;
+        }
+        .funnel-badge {
+          font-size: 11px;
+          color: ${C.muted};
+          background: ${C.panel};
+          border: 1px solid ${C.border};
+          border-radius: 6px;
+          padding: 6px 12px;
+          white-space: nowrap;
+        }
+        .funnel-grid {
+          display: grid;
+          grid-template-columns: 300px 1fr;
+        }
+        .funnel-sidebar {
+          border-right: 1px solid ${C.border};
+          padding: 20px;
+          overflow-y: auto;
+          max-height: calc(100vh - 70px);
+          scrollbar-width: thin;
+        }
+        .funnel-main {
+          padding: 20px 28px;
+        }
+        .funnel-kpi-grid {
+          display: grid;
+          grid-template-columns: repeat(5, 1fr);
+          gap: 10px;
+          margin-bottom: 18px;
+        }
+        .funnel-chart-grid {
+          display: grid;
+          grid-template-columns: 1.35fr 1fr;
+          gap: 12px;
+          margin-bottom: 12px;
+        }
+        .funnel-mc-grid {
+          display: grid;
+          grid-template-columns: repeat(6, 1fr);
+          gap: 8px;
+          margin-bottom: 14px;
+        }
+        .funnel-ergodicity {
+          background: #faf5ff;
+          border: 1px solid #e9d5ff;
+          border-radius: 10px;
+          padding: 14px 18px;
+          display: flex;
+          gap: 14px;
+          align-items: flex-start;
+        }
+        .funnel-source-box {
+          margin: 20px 28px 0;
+        }
+        @media (max-width: 900px) {
+          .funnel-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 8px;
+            padding: 16px 20px 14px;
+          }
+          .funnel-grid {
+            grid-template-columns: 1fr;
+          }
+          .funnel-sidebar {
+            border-right: none;
+            border-bottom: 1px solid ${C.border};
+            max-height: none;
+            overflow-y: visible;
+          }
+          .funnel-main {
+            padding: 16px 20px;
+          }
+          .funnel-kpi-grid {
+            grid-template-columns: repeat(3, 1fr);
+          }
+          .funnel-chart-grid {
+            grid-template-columns: 1fr;
+          }
+          .funnel-mc-grid {
+            grid-template-columns: repeat(3, 1fr);
+          }
+          .funnel-source-box {
+            margin: 16px 20px 0;
+          }
+        }
+        @media (max-width: 600px) {
+          .funnel-header {
+            padding: 12px 16px 10px;
+          }
+          .funnel-header-title {
+            font-size: 16px;
+          }
+          .funnel-sidebar {
+            padding: 16px;
+          }
+          .funnel-main {
+            padding: 12px 16px;
+          }
+          .funnel-kpi-grid {
+            grid-template-columns: repeat(2, 1fr);
+          }
+          .funnel-mc-grid {
+            grid-template-columns: repeat(2, 1fr);
+          }
+          .funnel-ergodicity {
+            padding: 10px 14px;
+            gap: 10px;
+          }
+          .funnel-source-box {
+            margin: 12px 16px 0;
+          }
+        }
+      `}</style>
 
       {/* Header */}
-      <div style={{ borderBottom: `1px solid ${C.border}`, padding: "20px 32px 18px",
-        display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+      <div className="funnel-header">
         <div>
-          <div style={{ fontSize: 18, fontWeight: 800, letterSpacing: "-0.02em", fontFamily: "'Crimson Pro', serif" }}>VC Portfolio Return Modeller</div>
-          <div style={{ fontSize: 12, color: C.muted, marginTop: 3 }}>
+          <div className="funnel-header-title">VC Portfolio Return Modeller</div>
+          <div className="funnel-header-sub">
             Scenario explorer for a cohort of 1,000 seed-stage companies
           </div>
         </div>
-        <div style={{ fontSize: 11, color: C.muted, background: C.panel,
-          border: `1px solid ${C.border}`, borderRadius: 6, padding: "6px 12px" }}>
+        <div className="funnel-badge">
           N = {COHORT} · {N_SIMS.toLocaleString()} simulations
         </div>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "300px 1fr" }}>
+      <div className="funnel-grid">
 
         {/* ── Sidebar ──────────────────────────────────────────────────────── */}
-        <div style={{ borderRight: `1px solid ${C.border}`, padding: "20px",
-          overflowY: "auto", maxHeight: "calc(100vh - 70px)", scrollbarWidth: "thin" }}>
+        <div className="funnel-sidebar">
 
           <Label>Transition Probabilities</Label>
           <div style={{ fontSize: 11, color: C.muted, marginBottom: 12 }}>% that advance to the next round</div>
@@ -308,10 +443,10 @@ export default function VCFunnelModel() {
         </div>
 
         {/* ── Main canvas ──────────────────────────────────────────────────── */}
-        <div style={{ padding: "20px 28px" }}>
+        <div className="funnel-main">
 
           {/* KPI row */}
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: 10, marginBottom: 18 }}>
+          <div className="funnel-kpi-grid">
             <KPICard label="M&A Exits" value={totals.totalMA}
               sub={`${fmt(totals.totalMA/10,1)}% of cohort`} color={C.ma} />
             <KPICard label="Unicorns" value={totals.unicorns}
@@ -326,7 +461,7 @@ export default function VCFunnelModel() {
           </div>
 
           {/* Funnel + proceeds charts */}
-          <div style={{ display: "grid", gridTemplateColumns: "1.35fr 1fr", gap: 12, marginBottom: 12 }}>
+          <div className="funnel-chart-grid">
             <div style={{ background: C.panel, border: `1px solid ${C.border}`, borderRadius: 10, padding: "16px 16px 10px" }}>
               <div style={{ fontSize: 12, fontWeight: 700, marginBottom: 4 }}>Startup Survival Funnel</div>
               <div style={{ fontSize: 11, color: C.muted, marginBottom: 10 }}>Company outcomes per 1,000 at each stage</div>
@@ -389,7 +524,7 @@ export default function VCFunnelModel() {
             </div>
 
             {/* Percentile cards */}
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(6,1fr)", gap: 8, marginBottom: 14 }}>
+            <div className="funnel-mc-grid">
               {[
                 ["P10",  mc.p10,  C.dead],
                 ["P25",  mc.p25,  C.ma],
@@ -447,8 +582,7 @@ export default function VCFunnelModel() {
           </div>
 
           {/* Ergodicity callout */}
-          <div style={{ background: "#faf5ff", border: "1px solid #e9d5ff",
-            borderRadius: 10, padding: "14px 18px", display: "flex", gap: 14, alignItems: "flex-start" }}>
+          <div className="funnel-ergodicity">
             <div style={{ fontSize: 20, marginTop: 1 }}>&#x2297;</div>
             <div>
               <div style={{ fontSize: 12, fontWeight: 700, color: "#7c3aed", marginBottom: 4 }}>Ergodicity Gap</div>
