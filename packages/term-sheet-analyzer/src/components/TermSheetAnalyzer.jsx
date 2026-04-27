@@ -63,14 +63,16 @@ const TermSheetAnalyzer = () => {
     const ts1 = dealStructure.ts1;
     const ts2 = dealStructure.ts2;
 
+    const ts1OneYearDividends = ts1.sharesIssued * ts1DivPerShare;
+    const ts1Preference = ts1.investment + ts1OneYearDividends;
+
     const calcTs1 = (exitVal) => {
-      // TS1: Non-participating preferred, non-cumulative dividend (assume not declared)
-      const preference = ts1.investment; // no declared dividends
+      // TS1: Non-participating preferred, non-cumulative dividend (one year declared)
       const asConverted = ts1.seriesAPct * exitVal;
-      const vcPayout = Math.max(preference, asConverted);
+      const vcPayout = Math.max(ts1Preference, asConverted);
       const commonPayout = exitVal - vcPayout;
       const effectiveVcPct = exitVal > 0 ? vcPayout / exitVal : 0;
-      return { exitVal, vcPayout, commonPayout, effectiveVcPct };
+      return { exitVal, vcPayout, commonPayout, effectiveVcPct, preference: ts1Preference };
     };
 
     const calcTs2 = (exitVal) => {
@@ -107,7 +109,7 @@ const TermSheetAnalyzer = () => {
     }));
 
     // Conversion threshold for TS1
-    const ts1ConversionThreshold = ts1.investment / ts1.seriesAPct;
+    const ts1ConversionThreshold = ts1Preference / ts1.seriesAPct;
 
     // Chart data: granular from $1M to $150M
     const chartData = [];
@@ -123,7 +125,7 @@ const TermSheetAnalyzer = () => {
       });
     }
 
-    return { tableData, chartData, ts1ConversionThreshold };
+    return { tableData, chartData, ts1ConversionThreshold, ts1Preference };
   }, [dealStructure, yearsToExit, ts1DivPerShare, ts2DivPerShare, ts2GuaranteedReturn, ts2DivCap, ts2SharePrice]);
 
   // --- Section C Calculations ---
@@ -448,7 +450,7 @@ const TermSheetAnalyzer = () => {
                   <span style={{ fontWeight: 600, color: '#1e293b' }}>Participation:</span> Non-participating
                 </div>
                 <div style={{ fontSize: 12, color: '#94a3b8', marginTop: 12, lineHeight: 1.6 }}>
-                  Preference = Investment + declared dividends. Since non-cumulative, dividends assumed not declared. VC takes MAX(preference, as-converted value).
+                  Preference = Investment + 1 year's dividends (non-cumulative, declared once). VC takes MAX(preference, as-converted value).
                 </div>
               </div>
 
@@ -483,7 +485,7 @@ const TermSheetAnalyzer = () => {
 
             {/* Key Metrics */}
             <div className="ts-metrics-grid" style={{ marginTop: 28 }}>
-              <MetricCard label="TS1 Preference" value={fmtM(dealStructure.ts1.investment)} color="#2563eb" />
+              <MetricCard label="TS1 Preference" value={fmtM(liquidationData.ts1Preference)} color="#2563eb" />
               <MetricCard label="TS2 Preference" value={(() => {
                 const ts2 = dealStructure.ts2;
                 const guaranteedReturn = ts2.investment * (Math.pow(1 + ts2GuaranteedReturn / 100, yearsToExit) - 1);
