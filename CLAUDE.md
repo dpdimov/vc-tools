@@ -157,11 +157,14 @@ Models VC fund economics from the LP perspective: fee structures, carry/clawback
 
 ## Source Files (reference material, not deployed)
 
-Located in the repo root:
+Located in `_sources/` (gitignored — local-only reference material):
 - `LP fees exercise.pdf` / `.xlsx` — Fund fees exercise description and workings
 - `Valuation exercises.pdf` / `.xlsx` — VC method, convertible notes, option pricing
 - `Valuation exercise with participation.pdf` / `.xlsx` — Participating preferred, cumulative dividends
 - `VC termsheets.pdf` / `.xlsx` — Term sheet comparison exercise
+- `Venture loan.docx` / `.xlsx` — Venture loan reference
+- `Investment_Lifecycle_summary.md` + `investment_lifecycle.jsx` — Investment Lifecycle source
+- `vc-funnel-model.jsx` — VC Funnel original source
 
 ## Gotchas
 
