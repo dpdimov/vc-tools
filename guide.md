@@ -22,6 +22,8 @@ The tools are presented in a logical sequence:
 | 3 | [Term Sheet Analyzer](#3-term-sheet-analyzer) | How do competing term sheets compare on founder economics? |
 | 4 | [Fund Fees Explorer](#4-fund-fees-explorer) | How do management fees and carry affect LP net returns? |
 | 5 | [Fund J-Curve](#5-fund-j-curve) | What does the investor's cash journey look like? |
+| 6 | [VC Funnel Model](#6-vc-funnel-model) | How do power-law outcomes shape portfolio returns? |
+| 7 | [Investment Lifecycle](#7-investment-lifecycle) | What happens to a single investment between entry and exit? |
 
 ---
 
@@ -257,6 +259,90 @@ Stage profiles encode survival chains and exit multiple distributions (e.g., See
 
 ---
 
+## 6. VC Funnel Model
+
+### What It Does
+
+Runs a Monte Carlo simulation of an entire portfolio of venture investments to show the *distribution* of fund-level outcomes — not a single point estimate, but the full range of TVPI and IRR a fund might produce given a set of stage-by-stage survival and exit assumptions.
+
+### How the Problem Is Decomposed
+
+The question is: *"Given the funnel of survival and exits at each stage, what does a fund's return distribution actually look like?"* A single point forecast hides the most important fact about venture: outcomes are power-law distributed, and the *mean* is driven by the tails. Two funds with identical expected returns can have wildly different probabilities of doubling LP capital.
+
+The decomposition is from the company outward to the portfolio:
+
+```
+"What does the portfolio return distribution look like?"
+  │
+  ├─ STAGE FUNNEL (per company)
+  │    ├─ Transition probabilities (Seed → A → B → C → exit / fail)
+  │    ├─ M&A vs IPO exit split at each stage
+  │    └─ Exit multiple distributions (including unicorn tail)
+  │
+  └─ PORTFOLIO CONSTRUCTION
+       ├─ Number of companies
+       ├─ Capital allocation per stage
+       └─ Sampled outcomes summed across the portfolio → fund TVPI / IRR
+```
+
+The decomposition principle is **distribution over point estimate**. By sampling thousands of portfolios from the same set of probabilities, the tool reveals the variance: the chance of losing money, the chance of returning 3x, the chance of catching a unicorn. The expected value is one moment of the distribution — and not the most informative one.
+
+### Core Question
+
+*"How likely is each fund outcome, given the funnel?"*
+
+The Monte Carlo machinery makes power-law dynamics tangible. Push the unicorn rate from 0.5% to 1% and watch the distribution stretch: the median barely moves, but the upper tail explodes. This is the lesson the J-Curve tool cannot show directly — fund returns are not normally distributed around a forecast, they are dominated by a small number of outliers, and the question for a GP is whether the portfolio is large enough and stage-appropriate enough to *catch* one.
+
+---
+
+## 7. Investment Lifecycle
+
+### What It Does
+
+Models a **single** venture investment from entry through every follow-on round to exit, tracking how the fund's ownership dilutes (when new money comes in) and recovers (when the fund follows on). It exists to make the reserve question concrete: when does it pay to double down on a company, and what does under-investing in winners cost?
+
+### How the Problem Is Decomposed
+
+Where the J-Curve and Funnel tools work bottom-up from companies to portfolios, this tool zooms the other way — it stays inside one investment and asks: *"What return does this single bet produce, and how is it shaped by what happens between entry and exit?"*
+
+```
+"What does this one investment return?"
+  │
+  ├─ ENTRY
+  │    ├─ Stage, cheque size, stake → implied post-money
+  │  
+  ├─ EACH FUTURE ROUND
+  │    ├─ Step-up (valuation increase)
+  │    ├─ Round size (new money raised by the company)
+  │    ├─ Our follow-on (cheque the fund writes to defend ownership)
+  │    └─ P(reach) (private belief about survival to this round)
+  │
+  └─ EXIT
+       ├─ Exit value × final ownership = proceeds
+       └─ Multiple, IRR, cumulative probability of reaching exit
+```
+
+Two analytical layers sit on top of this skeleton:
+
+**Conditional vs probability-weighted (toggle).** Conditional assumes the company survives every round to exit — it isolates the *dilution mechanics*. Probability-weighted folds in the chance of failing at each round — it reveals the power-law gap. The same investment that returns 8x conditional on success may be worth only 2x once failure is priced in.
+
+**The pricing edge (toggle).** A valuation step-up encodes the market's view of survival probability as its reciprocal: a 2.5× step-up implies the market priced the round as 40% likely (1 ÷ 2.5). Your own P(reach) is a separate, private belief. The gap is your *edge*. A positive edge means the round is cheap to follow on; negative means dear. The tool computes a capital-weighted edge across all follow-ons and tells you whether reserves are being deployed where the fund actually has an advantage — the disciplined version of "double down on winners."
+
+### Core Question
+
+*"When is it worth following on, and what does declining cost you?"*
+
+This is the Onset reserve lesson made mechanical. Watching the stake erode round by round when the fund declines to follow on — and recover when it does — turns an abstract principle into an arithmetic one. The pricing-edge layer goes further: capital is finite, and following on everywhere is not a strategy. The right rule is to double down where your belief about survival is more optimistic than the price implies.
+
+### How This Connects to the Other Tools
+
+- **VC Valuation** sets the entry post-money; this tool then follows that valuation forward through the next four to seven years.
+- **Valuation Nuances** and **Term Sheet Analyzer** define what happens at exit *given the proceeds* — this tool feeds them the proceeds (it assumes clean common stock; liquidation preferences are deliberately not modelled).
+- **VC Funnel Model** generates portfolio-level distributions by sampling many of these single-investment paths; this tool lets you inspect one path in detail.
+- **Fund J-Curve** aggregates many investments into a fund trajectory; this tool is the unit being aggregated.
+
+---
+
 ## Connecting the Tools
 
 These tools form a sequence through the venture capital process:
@@ -266,10 +352,13 @@ These tools form a sequence through the venture capital process:
 3. **Term Sheet Analyzer** compares competing offers on the dimensions that actually matter to founders
 4. **Fund Fees Explorer** shows the cost structure that determines what LPs actually receive
 5. **Fund J-Curve** models the LP's cash flow experience across the entire fund lifecycle
+6. **VC Funnel Model** turns the funnel into a distribution, exposing the power-law shape of fund outcomes
+7. **Investment Lifecycle** zooms into one investment to make dilution, follow-on, and pricing edge concrete
 
 The outputs of one tool inform the inputs of another:
 - The valuation from Tool 1 becomes the headline number that Tool 2 adjusts for deal structure
 - The term sheet provisions in Tool 3 include the liquidation preferences and anti-dilution clauses that create the nuances in Tool 2
 - The fund return multiples from Tool 5 must exceed the fee drag from Tool 4 for LPs to achieve target returns
+- The single-investment paths in Tool 7 are the units the Tool 6 funnel samples and the Tool 5 J-curve aggregates
 
 Start with the tool that matches your current question. Use the connections to deepen your analysis.
