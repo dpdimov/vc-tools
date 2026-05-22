@@ -144,7 +144,7 @@ function computeFund(params) {
 
   if (carryBasis === 'deal-by-deal') {
     const winnerCost = investedCapital * (successRate / 100);
-    dealByDealCarry = (carryRate / 100) * Math.max(0, grossProceeds - winnerCost);
+    dealByDealCarry = (carryRate / 100) * Math.max(0, grossProceeds - winnerCost - hurdleAmount);
     clawback = Math.max(0, dealByDealCarry - wholeFundCarry);
     totalCarry = wholeFundCarry; // After clawback, GP keeps only whole-fund carry
   } else {
